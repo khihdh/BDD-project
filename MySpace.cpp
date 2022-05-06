@@ -1,35 +1,37 @@
-#include "MySpace.h"
+#include "myspace.h"
 #include "coordinates.h"
-#include <OpenGL/glu.h>
+
 #include <QApplication>
 #include <cmath>
 #include <algorithm>
-#include <iostream>
-#include <QtMath>
 
 
 // Declarations des constantes
 const unsigned int WIN = 900;
-
+/*float camFrontZ = 0;
+float camFrontX = 0;
+float yaw=0;
+float directionX = 0;
+float directionY = 0;
+float directionZ = 0;
+float pitch = 0;*/
 // Constructeur
 MySpace::MySpace(QWidget * parent) : QOpenGLWidget(parent)
 {
     // Reglage de la taille/position
     setFixedSize(WIN, WIN);
+
     coordinates *cor = new  coordinates();
-    cor->checkAstCol(tabx_, taby_, tabz_, tabd_);
+        cor->checkAstCol(tabx_, taby_, tabz_, tabd_);
+
     // Connexion du timer
     connect(&m_AnimationTimer,  &QTimer::timeout, [&] {
         m_TimeElapsed += 1.0f;
         update();
     });
+
     m_AnimationTimer.setInterval(20);
     m_AnimationTimer.start();
-}
-
-MySpace::~MySpace()
-{
-
 }
 
 
@@ -38,50 +40,20 @@ void MySpace::initializeGL()
 {
     // Reglage de la couleur de fond
     glClearColor(0.8f, 0.8f, 0.8f, 0.0f);
+
     // Activation du zbuffer
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+    monVaisseau = new SpaceShip();
+    camFrontZ = 0;
 
     asteroids = new Asteroids(tabx_,taby_,tabz_, tabd_);
 }
 
 
-/*bool MySpace::checkAstCol() {
-    for (int i=0; i<nbAst; i++) {
-        z=RandomFloat(-30,-2);
-        x=RandomFloat(-30,30);
-        y=RandomFloat(-30, 30);
-        d = 1  + (rand() % 3);
-        qDebug()<<d;
-        bool flag = false;
-        while (!flag){
-            flag = true;
-            z=RandomFloat(-30,-2);
-            x=RandomFloat(-30,30);
-            y=RandomFloat(-30, 30);
-            for (int j = 0; j<i; j++) {
-                    //if (fabs(tabx_[j]-x)<16 && fabs(tabz_[j]-z)<9 && fabs(taby_[j]-y)<11) {
-                    if ((tabx_[j]-x)*(tabx_[j]-x) + (taby_[j]-y)*(taby_[j]-y) + (tabz_[j]-z)*(tabz_[j]-z) < 1) {
-                        flag = false;
-                }
-            }
-        }
-
-
-        tabx_[i]=x;
-        taby_[i]=y;
-        tabz_[i]=z;
-        tabd_[i]=d;
-    }
-
-    return true;
-}*/
-
 // Fonction de redimensionnement
 void MySpace::resizeGL(int width, int height)
 {
-
     // Definition du viewport (zone d'affichage)
     glViewport(0, 0, width, height);
 
@@ -96,46 +68,6 @@ void MySpace::resizeGL(int width, int height)
     glLoadIdentity();
 }
 
-float MySpace::RandomFloat(float min, float max)
-{
-    // this  function assumes max > min, you may want
-    // more robust error checking for a non-debug build
-    assert(max > min);
-    float random = ((float) rand()) / (float) RAND_MAX;
-
-    // generate (in your case) a float between 0 and (4.5-.78)
-    // then add .78, giving you a float between .78 and 4.5
-    float range = max - min;
-    return (random*range) + min;
-}
-
-void MySpace::keyPressEvent(QKeyEvent * keyEvent)
-{
-
-    switch (keyEvent->key())
-    {
-
-     case Qt::Key_Right :
-        qDebug() << "test";
-        break;
-
-    case Qt::Key_Left :
-       break;
-
-    case Qt::Key_Up :
-        break;
-
-    case Qt::Key_Down :
-        break;
-
-    case Qt::Key_R:
-        //reset
-        return;
-        break;
-    }
-    update();
-}
-
 // Fonction d'affichage
 void MySpace::paintGL()
 {
@@ -145,10 +77,95 @@ void MySpace::paintGL()
     // Definition de la position de la camera
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0f, 4.f, 4.f, 0.0f, 0.0f, 0.f, 0.0f, 1.0f, 0.0f);
 
-    // Affichage de la voiture
+
+    const float radius = 10.0f;
+    float camX = sin(m_TimeElapsed/1000) * radius;
+    float camZ = cos(m_TimeElapsed/1000) * radius;
+    //gluLookAt(0.0f, 4.f, 4.f, 0.0f, 0.0f, 0.f, 0.0f, 1.0f, 0.0f);
+    gluLookAt(0.0f+camFrontX , 4.0f, 4.f+camFrontZ, directionX+camFrontX, directionY, directionZ+camFrontZ, 0.0f, 1.0f, 0.0f);
+
+
+    // Affichage du vaisseau
     glPushMatrix();
-    asteroids->Display(m_TimeElapsed);
+    //glTranslatef(camFrontZ,0.0f,0.0f);
+    monVaisseau->Display(m_TimeElapsed);
+
+    // Affichage des asteroides
+       asteroids->Display(m_TimeElapsed);
+       glPopMatrix();
+
+
+       //repère
+
+    glPushMatrix();
+    glTranslatef(0.8f, 0.0f, 0.0f);
+    glTranslatef(5.f, 2.f, -0.5f);
+    glRotated(90.0, 90., 1., 0.);
+    gluCylinder(gluNewQuadric(), 0.7, 0.7, 1.5, 32, 32);
+    glTranslatef(0.f, 0.f, 1.5f);
+    gluDisk(gluNewQuadric(), 0.0, 0.7, 30, 1);
+    glPopMatrix();
+
     glPopMatrix();
 }
+
+    void MySpace::keyPressEvent(QKeyEvent * keyEvent)
+    {
+
+        const float cameraSpeed = 0.2f;
+        float xoffset;
+        switch(keyEvent->key())
+        {
+            // Les cas
+            case Qt::Key_Z:
+            {
+                qDebug() << "Button Z was pressed !";
+                camFrontZ += cameraSpeed *-1.0f ;//* sin(qDegreesToRadians(yaw)) +cameraSpeed *-1.0f  * cos(qDegreesToRadians(pitch))  ;
+                monVaisseau->incrCoordinatesZSpaceship();
+                asteroids ->incrCoordinatesZSpaceship();
+                update();
+                break;
+            }
+        case Qt::Key_S:
+        {
+            qDebug() << "Button S was pressed !";
+            camFrontZ += cameraSpeed *1.0f;
+            break;
+        }
+        case Qt::Key_Q:
+        {
+            qDebug() << "Button Q was pressed !";
+            camFrontX += cameraSpeed *-1.0f ;
+            break;
+        }
+        case Qt::Key_D:
+        {
+            qDebug() << "Button D was pressed !";
+            camFrontX = cameraSpeed *1.0f + camFrontX;
+            break;
+        }
+        case Qt::Key_A:
+        {
+            qDebug() << "Button A was pressed !";
+            yaw -= 1.0f;
+            directionX = cos(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            directionY = sin(qDegreesToRadians(pitch));
+            directionZ = sin(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            break;
+        }
+        case Qt::Key_E:
+        {
+            qDebug() << "Button E was pressed !";
+            yaw += 1.0f;
+            directionX = cos(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            directionY = sin(qDegreesToRadians(pitch));
+            directionZ = sin(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            break;
+        }
+
+
+        keyEvent->accept();
+        update();
+}
+    }

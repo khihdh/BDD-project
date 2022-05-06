@@ -22,11 +22,13 @@ TARGET 	  = TD2
 SOURCES += main.cpp \
     Asteroids.cpp \
     MySpace.cpp \
-    coordinates.cpp
+    coordinates.cpp \
+    spaceship.cpp
 HEADERS += \
     Asteroids.h \
     MySpace.h \
-    coordinates.h
+    coordinates.h \
+    spaceship.h
 
 RESOURCES += \
     res/textures.qrc

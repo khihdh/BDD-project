@@ -45,7 +45,7 @@ void  Asteroids::DrawAst(float x, float y, float z, GLdouble d) {
     GLUquadricObj *quad = gluNewQuadric();
     gluQuadricTexture(quad, GL_TRUE);
     glTranslatef(x,y,z);
-    c+=0.1;
+    c+=0.01;
     glRotatef(c,0,0,1);
     gluSphere(quad, d, 13, 13);
 
@@ -78,12 +78,13 @@ void Asteroids::Display(uint64_t iTimeElapsed)
         DrawAst(tabx_[i],taby_[i],tabz_[i], tabd_[i]);
         glPopMatrix();
     }
-    glBindTexture(GL_TEXTURE_2D, textures[1]);
 
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, textures[1]);
+    glTranslatef(0.f,0.f,0.f + spaceshipz_);
     GLUquadricObj *quad = gluNewQuadric();
     gluQuadricTexture(quad, GL_TRUE);
-    glPushMatrix();
-    gluSphere(quad, 20, 50, 50);
+    gluSphere(quad,50, 50, 50);
     glPopMatrix();
 
     glEnable(GL_LIGHTING);
@@ -91,3 +92,6 @@ void Asteroids::Display(uint64_t iTimeElapsed)
 
 }
 
+void Asteroids::incrCoordinatesZSpaceship() {
+    spaceshipz_-=0.2;
+}

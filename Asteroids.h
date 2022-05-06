@@ -5,7 +5,6 @@
 #include <vector>
 
 
-// Classe dediee pour la gestion du sol
 class Asteroids
 {
 
@@ -20,10 +19,12 @@ private:
     float tabz_[nbAst];
     GLdouble tabd_[nbAst];
     float x=0, y=0, z=0;
+    float spaceshipz_=0;
 
 public:
     // Constructeur avec parametres
     Asteroids(float tabx_[nbAst], float taby_[nbAst], float tabz_[nbAst], GLdouble tabd_[nbAst]);
+    void incrCoordinatesZSpaceship();
 
 
     // Destructeur
