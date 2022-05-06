@@ -1,7 +1,7 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 
 class coordinates

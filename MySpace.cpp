@@ -8,13 +8,6 @@
 
 // Declarations des constantes
 const unsigned int WIN = 900;
-/*float camFrontZ = 0;
-float camFrontX = 0;
-float yaw=0;
-float directionX = 0;
-float directionY = 0;
-float directionZ = 0;
-float pitch = 0;*/
 // Constructeur
 MySpace::MySpace(QWidget * parent) : QOpenGLWidget(parent)
 {
@@ -83,7 +76,7 @@ void MySpace::paintGL()
     float camX = sin(m_TimeElapsed/1000) * radius;
     float camZ = cos(m_TimeElapsed/1000) * radius;
     //gluLookAt(0.0f, 4.f, 4.f, 0.0f, 0.0f, 0.f, 0.0f, 1.0f, 0.0f);
-    gluLookAt(0.0f+camFrontX , 4.0f, 4.f+camFrontZ, directionX+camFrontX, directionY, directionZ+camFrontZ, 0.0f, 1.0f, 0.0f);
+    gluLookAt(0.0f+directionX , 4.0f+directionY, 4.f+directionZ, directionX, directionY, directionZ, 0.0f, 1.0f, 0.0f);
 
 
     // Affichage du vaisseau
@@ -121,10 +114,15 @@ void MySpace::paintGL()
             case Qt::Key_Z:
             {
                 qDebug() << "Button Z was pressed !";
-                camFrontZ += cameraSpeed *-1.0f ;//* sin(qDegreesToRadians(yaw)) +cameraSpeed *-1.0f  * cos(qDegreesToRadians(pitch))  ;
+                /*camFrontZ += cameraSpeed *-1.0f ;//* sin(qDegreesToRadians(yaw)) +cameraSpeed *-1.0f  * cos(qDegreesToRadians(pitch))  ;
                 monVaisseau->incrCoordinatesZSpaceship();
                 asteroids ->incrCoordinatesZSpaceship();
-                update();
+                update();*/
+                r += cameraSpeed *-1.0f;
+                directionX = r*sin(teta)*sin(phi);
+                directionY = r*cos(teta);
+                directionZ = r*sin(teta)*cos(phi);
+                monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
                 break;
             }
         case Qt::Key_S:
@@ -148,19 +146,21 @@ void MySpace::paintGL()
         case Qt::Key_A:
         {
             qDebug() << "Button A was pressed !";
-            yaw -= 1.0f;
-            directionX = cos(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
-            directionY = sin(qDegreesToRadians(pitch));
-            directionZ = sin(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            phi -= 1;
+            r = directionX*directionX+directionY*directionY+directionZ*directionZ;
+            directionX = sin(teta)*sin(phi);
+            directionY = cos(teta);
+            directionZ = sin(teta)*cos(phi);
+            monVaisseau->rotPhi(phi,teta);
             break;
         }
         case Qt::Key_E:
         {
             qDebug() << "Button E was pressed !";
-            yaw += 1.0f;
-            directionX = cos(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            phi += 1.0f;
+            directionX = cos(qDegreesToRadians(phi)) * cos(qDegreesToRadians(pitch));
             directionY = sin(qDegreesToRadians(pitch));
-            directionZ = sin(qDegreesToRadians(yaw)) * cos(qDegreesToRadians(pitch));
+            directionZ = sin(qDegreesToRadians(phi)) * cos(qDegreesToRadians(pitch));
             break;
         }
 

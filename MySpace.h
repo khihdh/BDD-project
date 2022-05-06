@@ -45,7 +45,9 @@ private:
     SpaceShip* monVaisseau = nullptr;
     //float camFrontZ ;
     float camFrontX = 0;
-    float yaw=0;
+    float phi=0;
+    float teta = 90;
+    float r = 0;
     float directionX = 0;
     float directionY = 0;
     float directionZ = 0;

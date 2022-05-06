@@ -2,8 +2,8 @@
 #define SPACESHIP_H
 
 #include <qopengl.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <QColor>
 
 // Classe dediee pour la gestion de la voiture
@@ -18,9 +18,10 @@ public:
 
     // Methode d'affichage
     void Display(uint64_t iTimeElapsed) const;
-    void incrCoordinatesZSpaceship();
+    void incrCoordinatesZSpaceship(float phi,float teta,float r);
     void incrCoordinatesYSpaceship();
     void incrCoordinatesXSpaceship();
+    void rotPhi(double phi,double teta);
 
 private:
     GLUquadric * m_Roue { nullptr };
