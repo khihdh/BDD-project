@@ -35,7 +35,7 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     // rectangle
     glPushMatrix();
     glTranslatef(0.0f+spaceshipx_, 0.0f+spaceshipy_, 0.0f+spaceshipz_);
-    //glRotated(phi,0,0,0);
+    glRotated(phi,1,1,1);
     glBegin(GL_QUADS);
     //face derrière
     glNormal3f(0.0,0.0,1.0);

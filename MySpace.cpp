@@ -77,8 +77,13 @@ void MySpace::paintGL()
     float camZ = cos(m_TimeElapsed/1000) * radius;
     //gluLookAt(0.0f, 4.f, 4.f, 0.0f, 0.0f, 0.f, 0.0f, 1.0f, 0.0f);
     //direction2 correspond à la position de la caméra qui de base est en 0,+4,+4
+    if (sin(teta)>0){
     gluLookAt(directionX+directionX2 , directionY+directionY2, directionZ+directionZ2, directionX, directionY, directionZ, 0.0f, 1.0f, 0.0f);
+    }
+    else {
+        gluLookAt(directionX+directionX2 , directionY+directionY2, directionZ+directionZ2, directionX, directionY, directionZ, 0.0f, -1.0f, 0.0f);
 
+    }
 
     // Affichage du vaisseau
     glPushMatrix();
