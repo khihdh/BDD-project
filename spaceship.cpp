@@ -35,6 +35,7 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     // rectangle
     glPushMatrix();
     glTranslatef(0.0f+spaceshipx_, 0.0f+spaceshipy_, 0.0f+spaceshipz_);
+    //glRotated(phi,0,0,0);
     glBegin(GL_QUADS);
     //face derrière
     glNormal3f(0.0,0.0,1.0);
@@ -123,16 +124,21 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     /* Load textures */
 }
 
-void SpaceShip::incrCoordinatesZSpaceship(float teta,float phi,float r) {
+void SpaceShip::incrCoordinatesZSpaceship(float teta2,float phi2,float r) {
+    teta = teta2;
+    phi=phi2;
     spaceshipx_ = r*sin(teta)*sin(phi);
-    spaceshipy_ = r*cos(teta);
+    spaceshipy_ = r*-cos(teta);
     spaceshipz_ = r*sin(teta)*cos(phi);
 }
 
-void SpaceShip::rotPhi(double phi,double teta){
+void SpaceShip::rotPhi(float teta2,float phi2,float r){
+    teta = teta2;
+    phi=phi2;
     spaceshipx_ = sin(teta)*sin(phi);
     spaceshipy_ = cos(teta);
     spaceshipz_ = sin(teta)*cos(phi);
+
 }
 
 void SpaceShip::incrCoordinatesXSpaceship() {

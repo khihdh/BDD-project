@@ -76,7 +76,8 @@ void MySpace::paintGL()
     float camX = sin(m_TimeElapsed/1000) * radius;
     float camZ = cos(m_TimeElapsed/1000) * radius;
     //gluLookAt(0.0f, 4.f, 4.f, 0.0f, 0.0f, 0.f, 0.0f, 1.0f, 0.0f);
-    gluLookAt(0.0f+directionX , 4.0f+directionY, 4.f+directionZ, directionX, directionY, directionZ, 0.0f, 1.0f, 0.0f);
+    //direction2 correspond à la position de la caméra qui de base est en 0,+4,+4
+    gluLookAt(directionX+directionX2 , directionY+directionY2, directionZ+directionZ2, directionX, directionY, directionZ, 0.0f, 1.0f, 0.0f);
 
 
     // Affichage du vaisseau
@@ -120,47 +121,72 @@ void MySpace::paintGL()
                 update();*/
                 r += cameraSpeed *-1.0f;
                 directionX = r*sin(teta)*sin(phi);
-                directionY = r*cos(teta);
+                directionY = r*-cos(teta);
                 directionZ = r*sin(teta)*cos(phi);
-                monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
+                monVaisseau-> incrCoordinatesZSpaceship(phi,teta,r);
                 break;
             }
         case Qt::Key_S:
         {
             qDebug() << "Button S was pressed !";
-            camFrontZ += cameraSpeed *1.0f;
+            r += cameraSpeed *1.0f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
             break;
         }
         case Qt::Key_Q:
         {
             qDebug() << "Button Q was pressed !";
-            camFrontX += cameraSpeed *-1.0f ;
+            teta -= .01f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            directionX2 = 4.0f*sin(teta)*sin(phi);
+            directionY2 = -8.0f*cos(teta);
+            directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
             break;
         }
         case Qt::Key_D:
         {
             qDebug() << "Button D was pressed !";
-            camFrontX = cameraSpeed *1.0f + camFrontX;
+            teta += .01f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            directionX2 = 4.0f*sin(teta)*sin(phi);
+            directionY2 = -8.0f*cos(teta);
+            directionZ2 = 4.0f*sin(teta)*cos(phi);
+            qDebug() << sin(teta);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
             break;
         }
         case Qt::Key_A:
         {
             qDebug() << "Button A was pressed !";
-            phi -= 1;
-            r = directionX*directionX+directionY*directionY+directionZ*directionZ;
-            directionX = sin(teta)*sin(phi);
-            directionY = cos(teta);
-            directionZ = sin(teta)*cos(phi);
-            monVaisseau->rotPhi(phi,teta);
+            phi -= .01f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            directionX2 = 4.0f*sin(teta)*sin(phi);
+            directionY2 = -8.0f*cos(teta);
+            directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
             break;
         }
         case Qt::Key_E:
         {
             qDebug() << "Button E was pressed !";
-            phi += 1.0f;
-            directionX = cos(qDegreesToRadians(phi)) * cos(qDegreesToRadians(pitch));
-            directionY = sin(qDegreesToRadians(pitch));
-            directionZ = sin(qDegreesToRadians(phi)) * cos(qDegreesToRadians(pitch));
+            phi += .01f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            directionX2 = 4.0f*sin(teta)*sin(phi);
+            directionY2 = -8.0f*cos(teta);
+            directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
             break;
         }
 

@@ -48,9 +48,12 @@ private:
     float phi=0;
     float teta = 90;
     float r = 0;
-    float directionX = 0;
-    float directionY = 0;
-    float directionZ = 0;
+    float directionX = r*sin(teta)*sin(phi);
+    float directionY = r*cos(teta);
+    float directionZ = r*sin(teta)*cos(phi);
+    float directionX2 = 4.0f*sin(teta)*sin(phi);
+    float directionY2 = -8.0f*cos(teta);
+    float directionZ2 = 4.0f*sin(teta)*cos(phi);
     float pitch = 0;
 
     float m_TimeElapsed { 0.0f };
