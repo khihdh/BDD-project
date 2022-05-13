@@ -44,7 +44,7 @@ void  Asteroids::DrawAst(float x, float y, float z, GLdouble d) {
 
     GLUquadricObj *quad = gluNewQuadric();
     gluQuadricTexture(quad, GL_TRUE);
-    glTranslatef(x,y,z);
+    glTranslatef(x*2,y*2,z*2);
     c+=0.01;
     glRotatef(c,0,0,1);
     gluSphere(quad, d, 13, 13);

@@ -120,15 +120,11 @@ void MySpace::paintGL()
             case Qt::Key_Z:
             {
                 qDebug() << "Button Z was pressed !";
-                /*camFrontZ += cameraSpeed *-1.0f ;//* sin(qDegreesToRadians(yaw)) +cameraSpeed *-1.0f  * cos(qDegreesToRadians(pitch))  ;
-                monVaisseau->incrCoordinatesZSpaceship();
-                asteroids ->incrCoordinatesZSpaceship();
-                update();*/
                 r += cameraSpeed *-1.0f;
                 directionX = r*sin(teta)*sin(phi);
                 directionY = r*-cos(teta);
                 directionZ = r*sin(teta)*cos(phi);
-                monVaisseau-> incrCoordinatesZSpaceship(phi,teta,r);
+                monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
                 break;
             }
         case Qt::Key_S:
@@ -151,7 +147,9 @@ void MySpace::paintGL()
             directionX2 = 4.0f*sin(teta)*sin(phi);
             directionY2 = -8.0f*cos(teta);
             directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau -> changeFlagPhi(false);
             monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
+            monVaisseau -> changeFlagPhi(true);
             break;
         }
         case Qt::Key_D:
@@ -165,25 +163,14 @@ void MySpace::paintGL()
             directionY2 = -8.0f*cos(teta);
             directionZ2 = 4.0f*sin(teta)*cos(phi);
             qDebug() << sin(teta);
+            monVaisseau -> changeFlagPhi(false);
             monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
+            monVaisseau -> changeFlagPhi(true);
             break;
         }
         case Qt::Key_A:
         {
             qDebug() << "Button A was pressed !";
-            phi -= .01f;
-            directionX = r*sin(teta)*sin(phi);
-            directionY = r*-cos(teta);
-            directionZ = r*sin(teta)*cos(phi);
-            directionX2 = 4.0f*sin(teta)*sin(phi);
-            directionY2 = -8.0f*cos(teta);
-            directionZ2 = 4.0f*sin(teta)*cos(phi);
-            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
-            break;
-        }
-        case Qt::Key_E:
-        {
-            qDebug() << "Button E was pressed !";
             phi += .01f;
             directionX = r*sin(teta)*sin(phi);
             directionY = r*-cos(teta);
@@ -191,7 +178,24 @@ void MySpace::paintGL()
             directionX2 = 4.0f*sin(teta)*sin(phi);
             directionY2 = -8.0f*cos(teta);
             directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau -> changeFlagTeta(false);
             monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
+            monVaisseau -> changeFlagTeta(true);
+            break;
+        }
+        case Qt::Key_E:
+        {
+            qDebug() << "Button E was pressed !";
+            phi -= .01f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            directionX2 = 4.0f*sin(teta)*sin(phi);
+            directionY2 = -8.0f*cos(teta);
+            directionZ2 = 4.0f*sin(teta)*cos(phi);
+            monVaisseau -> changeFlagTeta(false);
+            monVaisseau-> incrCoordinatesZSpaceship(teta,phi,r);
+            monVaisseau -> changeFlagTeta(true);
             break;
         }
 

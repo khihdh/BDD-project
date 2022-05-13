@@ -12,7 +12,7 @@ class Asteroids
 private:
     GLuint * textures;
     GLuint * textures_2;
-    const static int nbAst = 16;
+    const static int nbAst = 40;
     float c =10;
     float tabx_[nbAst];
     float taby_[nbAst];
