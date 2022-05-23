@@ -6,8 +6,9 @@
 #include <QtMath>
 #include <QRandomGenerator>
 
-coordinates::coordinates()
+coordinates::coordinates(int nbAst2)
 {
+    nbAst = nbAst2;
     for (int i=0; i<nbAst; i++) {
         tabx_[i]=x;
         taby_[i]=y;
@@ -30,7 +31,7 @@ float coordinates::RandomFloat(float min, float max)
     return (random*range) + min;
 }
 
-bool coordinates::checkAstCol(float tabx[nbAst], float taby[nbAst], float tabz[nbAst], GLdouble tabd[nbAst]) {
+bool coordinates::checkAstCol(float tabx[nbAstMax], float taby[nbAstMax], float tabz[nbAstMax], GLdouble tabd[nbAstMax]) {
     for (int i=0; i<nbAst; i++) {
         z=QRandomGenerator::global()->bounded(-20,-2);
         x=QRandomGenerator::global()->bounded(-20,20);
@@ -38,16 +39,20 @@ bool coordinates::checkAstCol(float tabx[nbAst], float taby[nbAst], float tabz[n
         d = 1  + (rand() % 3);
         bool flag = false;
         while (!flag){
-            flag = true;
+            int col = 0;
             z=QRandomGenerator::global()->bounded(-20,-2);
             x=QRandomGenerator::global()->bounded(-20,20);
             y=QRandomGenerator::global()->bounded(-20,20);
             for (int j = 0; j<i; j++) {
-                    if ((tabx_[j]-x)*(tabx_[j]-x) + (taby_[j]-y)*(taby_[j]-y) + (tabz_[j]-z)*(tabz_[j]-z) < 12) {
-                        flag = false;
+                    if (((tabx[j]-x)*(tabx[j]-x) + (taby[j]-y)*(taby[j]-y) + (tabz[j]-z)*(tabz[j]-z)) < 36) {
+                        col+=1; }
                 }
+            qDebug()<<col;
+            if (col == 0) {
+                flag = true;
             }
-        }
+            }
+
 
 
         tabx[i]=x;

@@ -2,8 +2,9 @@
 #include <QImage>
 #include <QDebug>
 
-Asteroids::Asteroids(float tabx[nbAst], float taby[nbAst], float tabz[nbAst],GLdouble tabd[nbAst])
+Asteroids::Asteroids(float tabx[nbAstMax], float taby[nbAstMax], float tabz[nbAstMax],GLdouble tabd[nbAstMax], int nbAst2)
 {
+    nbAst = nbAst2;
     QImage ast = QImage(":/asteroids.jpg");
     QImage text_ast = ast.convertToFormat(QImage::Format_RGBA8888);
     QImage space = QImage(":/space.jpg");
@@ -37,17 +38,24 @@ Asteroids::~Asteroids()
     float x=0,y=0,z=0, d=0;
 }
 
+void Asteroids::DeleteAst(int j){
+    tabFlagDeleteAst[j]=true;
+}
 
-void  Asteroids::DrawAst(float x, float y, float z, GLdouble d) {
+
+void  Asteroids::DrawAst(float x, float y, float z, GLdouble d,int i) {
 
     glBindTexture(GL_TEXTURE_2D, textures[0]);
-
+    glPushMatrix();
     GLUquadricObj *quad = gluNewQuadric();
     gluQuadricTexture(quad, GL_TRUE);
+    tabAst[i] = quad;
+    tabFlagDeleteAst[i] = false;
     glTranslatef(x,y,z);
     c+=0.01;
     glRotatef(c,0,0,1);
     gluSphere(quad, d, 13, 13);
+    glPopMatrix();
 
 
 }
@@ -65,6 +73,14 @@ float Asteroids::RandomFloat(float min, float max)
     return (random*range) + min;
 }
 
+int Asteroids::CheckCol(float x, float y, float z) {
+    for (int j = 0; j<nbAst; j++) {
+            if (((tabx_[j]-x)*(tabx_[j]-x) + (taby_[j]-y)*(taby_[j]-y) + (tabz_[j]-z)*(tabz_[j]-z)) < 36) {
+                return j;
+            }
+        }
+   return -1;
+}
 
 void Asteroids::Display(uint64_t iTimeElapsed)
 {
@@ -74,9 +90,9 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     glEnable(GL_TEXTURE_2D);
 
     for (int i=0; i<nbAst; i++) {
-        glPushMatrix();
-        DrawAst(tabx_[i],taby_[i],tabz_[i], tabd_[i]);
-        glPopMatrix();
+        if (tabFlagDeleteAst[i]==false){
+            DrawAst(tabx_[i],taby_[i],tabz_[i], tabd_[i],i);
+        }
     }
 
     glPushMatrix();
@@ -90,6 +106,12 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     glEnable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
 
+}
+
+void Asteroids::incrSpaceShip(float x, float y, float z) {
+    xSpaceShip = x;
+    ySpaceShip = y;
+    zSpaceShip = z;
 }
 
 void Asteroids::incrCoordinatesZSpaceship() {

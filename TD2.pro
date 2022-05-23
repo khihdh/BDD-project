@@ -23,12 +23,20 @@ SOURCES += main.cpp \
     Asteroids.cpp \
     MySpace.cpp \
     coordinates.cpp \
+    iss.cpp \
+    mainwindow.cpp \
     spaceship.cpp
 HEADERS += \
     Asteroids.h \
     MySpace.h \
     coordinates.h \
+    iss.h \
+    mainwindow.h \
     spaceship.h
 
 RESOURCES += \
     res/textures.qrc
+
+DISTFILES += \
+    Test.qml \
+    TestForm.ui.qml

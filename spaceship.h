@@ -18,14 +18,25 @@ public:
 
     // Methode d'affichage
     void Display(uint64_t iTimeElapsed) const;
-    void incrCoordinatesZSpaceship();
+    void incrCoordinatesZSpaceship(float teta2,float phi2,float r);
     void incrCoordinatesYSpaceship();
     void incrCoordinatesXSpaceship();
+    void rotPhi(float phi,float teta,float r);
+    void changeFlagTeta(bool flag);
+    void changeFlagPhi(bool flag);
 
 private:
     GLUquadric * m_Roue { nullptr };
     float spaceshipx_=0,spaceshipy_=0,spaceshipz_=0;
+    float phi=0;
+    float teta = 90;
+    bool flagTeta = true,flagPhi=true;
 };
+
+
+
+
+
 
 
 #endif // SPACESHIP_H
