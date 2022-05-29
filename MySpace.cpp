@@ -26,7 +26,24 @@ MySpace::MySpace(QWidget *parent) : QOpenGLWidget(parent)
 }
 
 MySpace::~MySpace(){
+    r = 0;
+    phi=0;
+    teta = 90;
+    gameOverFlag = false;
 };
+
+void MySpace::reset(){
+    r = 0;
+    phi=0;
+    teta = 90;
+    gameOverFlag = false;
+};
+
+void MySpace::closeApp() {
+    close();
+}
+
+
 
 
 // Fonction d'initialisation

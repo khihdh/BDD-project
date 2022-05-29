@@ -25,11 +25,14 @@ public:
     void show(int nbAst);
     int frameWidth;
     int frameHeight;
+    VideoCapture cap;
     bool gameOverFlag = false;
     CascadeClassifier face_cascade;
     CascadeClassifier face_cascade2;
     MySpace myspace_;
     bool checkGameOverFlag();
+    void reset();
+    void closeApp();
 
 };
 

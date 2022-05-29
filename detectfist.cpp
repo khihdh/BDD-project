@@ -15,9 +15,20 @@ detectFist::detectFist(QWidget *parent) : QOpenGLWidget(parent)
 }
 
 detectFist::~detectFist(){
-    close();
+    myspace_.hide();
 }
 
+void detectFist::reset(){
+    myspace_.hide();
+    myspace_.reset();
+    cap.release();
+    gameOverFlag = false;
+}
+
+void detectFist::closeApp() {
+    myspace_.closeApp();
+    close();
+}
     void detectFist::show(int nbAst){
 
     myspace_.setNbAst(nbAst);
@@ -51,7 +62,7 @@ detectFist::~detectFist(){
 while (waitKey(5)<0)
 {
 
-    if (myspace_.checkGameOverFlag()==true){
+    if (myspace_.checkGameOverFlag()){
         gameOverFlag = true;
     }
 

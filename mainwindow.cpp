@@ -74,13 +74,13 @@ void  MainWindow::play(){
     int diff = spinBox->value();
     nbAst = 0;
     if (diff == 1) {
-        nbAst = 10;
+        nbAst = 7;
     }
     else if (diff == 2) {
-        nbAst = 20;
+        nbAst = 10;
     }
     else if (diff == 3) {
-        nbAst = 30;
+        nbAst = 16;
     }
     detectFist_.show(nbAst);
 }
@@ -91,11 +91,14 @@ void MainWindow::checkGameOver()
 {
     if  (detectFist_.checkGameOverFlag()) {
         qDebug()<<"gameOVER";
+        t.stop();
+        detectFist_.reset();
     }
 }
 
 void MainWindow::quit() {
-
+    detectFist_.closeApp();
+    close();
 }
 
 void MainWindow::updateTime() {

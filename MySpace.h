@@ -27,6 +27,8 @@ public:
     void Q();
 
     bool checkGameOverFlag();
+    void reset();
+    void closeApp();
 
 protected:
 
