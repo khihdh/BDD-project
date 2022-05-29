@@ -17,17 +17,18 @@ MainWindow::MainWindow(QWidget *parent)
     label->setVisible(true);
     label->setAlignment(Qt::AlignCenter);
 
-
-    listTable = new QListWidget;
-
-    QPushButton *btnPlay = new QPushButton(tr("&Play"));
+    btnPlay = new QPushButton(tr("&Play"));
     connect(btnPlay, SIGNAL(clicked()), this, SLOT(play()));
 
-    label2 = new QLabel();
-    QString str = "Choose the number of Asteroids (between 0 and 40)";
-    label2->setText(str);
-    label2->setVisible(true);
-    label2->setAlignment(Qt::AlignCenter);
+    QPushButton *btnQuit = new QPushButton(tr("&quit"));
+    connect(btnQuit, SIGNAL(clicked()), this, SLOT(quit()));
+
+
+    nbAst_Label = new QLabel();
+    QString str = "Choose a difficulty between 1 and 3 (1=easy, 3=hard)";
+    nbAst_Label->setText(str);
+    nbAst_Label->setVisible(true);
+    nbAst_Label->setAlignment(Qt::AlignCenter);
 
     spinBox = new QSpinBox();
     spinBox->setValue(0);
@@ -35,14 +36,29 @@ MainWindow::MainWindow(QWidget *parent)
     spinBox->setAlignment(Qt::AlignCenter);
 
     QVBoxLayout *layout = new QVBoxLayout;
+    //layout->addWidget(startB = new QPushButton("start", this));
+    //layout->addWidget(stopB = new QPushButton("stop", this));
     layout->addWidget(label);
-    layout->addWidget(label2);
+    layout->addWidget(nbAst_Label);
     layout->addWidget(spinBox);
     layout->addWidget(btnPlay);
+    layout->addWidget(l = new QLabel(this));
+    l->setText(QTime(0, 0).toString());
+    layout->addWidget(btnQuit);
+
+    connect(&t, SIGNAL(timeout()), this, SLOT(updateTime()));
+    //connect(btnPlay, SIGNAL(clicked(bool)), this, SLOT(start()));
+    //connect(stopB, SIGNAL(clicked(bool)), &t, SLOT(stop()));
 
     QWidget *centralWidget = new QWidget;
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+
+    QTimer *timer = new QTimer(this);
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(checkGameOver()));
+
+    timer->start(1000);
 }
 
 
@@ -52,26 +68,44 @@ MainWindow::~MainWindow()
 }
 
 void  MainWindow::play(){
-    nbAst = spinBox->value();
-    qDebug()<<nbAst;
-    myspace_.setNbAst(nbAst);
-    myspace_.show();
+    l->setText(QTime(0, 0).toString());
+    startTime.restart();
+    t.start(1000);
+    int diff = spinBox->value();
+    nbAst = 0;
+    if (diff == 1) {
+        nbAst = 10;
+    }
+    else if (diff == 2) {
+        nbAst = 20;
+    }
+    else if (diff == 3) {
+        nbAst = 30;
+    }
+    detectFist_.show(nbAst);
 }
 int MainWindow::getNbAst() {
     return nbAst;
 }
-void MainWindow::open()
+void MainWindow::checkGameOver()
 {
-
-}
-
-void MainWindow::save()
-{
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
+    if  (detectFist_.checkGameOverFlag()) {
+        qDebug()<<"gameOVER";
+    }
 }
 
 void MainWindow::quit() {
 
-    close();
 }
+
+void MainWindow::updateTime() {
+    l->setText(QTime(0, 0).addMSecs(startTime.elapsed()).toString());
+}
+
+void MainWindow::start() {
+      l->setText(QTime(0, 0).toString());
+      startTime.restart();
+      t.start(1000);
+    }
+
 

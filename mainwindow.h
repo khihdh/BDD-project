@@ -3,17 +3,24 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QMainWindow>
-#include "MySpace.h"
+#include "detectfist.h"
 #include <QSpinBox>
+#include <QElapsedTimer>
+#include <QPushButton>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QLabel *label, *label2;
-    QListWidget *listTable;
+    QLabel *label, *nbAst_Label;
     QSpinBox *spinBox;
     int nbAst =0;
-    MySpace myspace_;
+    detectFist detectFist_;
+    QElapsedTimer startTime;
+    QTimer t;
+    QLabel * l;
+    QPushButton * startB, * stopB;
+    QPushButton *btnPlay;
+    bool gameOverFlag = false;
 
 
 
@@ -26,7 +33,8 @@ public:
 private slots:
     void play();
     void quit();
-    void save();
-    void open();
+    void checkGameOver();
+    void updateTime();
+    void start();
 };
 #endif // MAINWINDOW_H

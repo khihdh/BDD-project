@@ -1,10 +1,9 @@
-#include "myspace.h"
-#include "coordinates.h"
+#include "MySpace.h"
+#include "collision.h"
 
 #include <QApplication>
 #include <cmath>
 #include <algorithm>
-
 
 
 const unsigned int WIN = 900;
@@ -13,8 +12,8 @@ MySpace::MySpace(QWidget *parent) : QOpenGLWidget(parent)
 {
     // Reglage de la taille/position
     setFixedSize(WIN, WIN);
-    coordinates *cor = new  coordinates(nbAst);
-    cor->checkAstCol(tabx_, taby_, tabz_, tabd_);
+    collision *col = new  collision(nbAst);
+    col->checkAstCol(tabx_, taby_, tabz_, tabd_);
 
     // Connexion du timer
     connect(&m_AnimationTimer,  &QTimer::timeout, [&] {
@@ -25,6 +24,9 @@ MySpace::MySpace(QWidget *parent) : QOpenGLWidget(parent)
     m_AnimationTimer.setInterval(20);
     m_AnimationTimer.start();
 }
+
+MySpace::~MySpace(){
+};
 
 
 // Fonction d'initialisation
@@ -97,18 +99,18 @@ void MySpace::paintGL()
     // Affichage des asteroides
     asteroids->Display(m_TimeElapsed);
     glPopMatrix();
+
 }
 
     void MySpace::keyPressEvent(QKeyEvent * keyEvent)
     {
 
-        const float cameraSpeed = 0.2f;
-        float xoffset;
         switch(keyEvent->key())
         {
             // Les cas
             case Qt::Key_Z:
             {
+            if (gameOverFlag == false) {
                 qDebug() << "Button Z was pressed !";
                 r += cameraSpeed *-1.0f;
                 directionX = r*sin(teta)*sin(phi);
@@ -116,14 +118,17 @@ void MySpace::paintGL()
                 directionZ = r*sin(teta)*cos(phi);
                 monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
                 asteroids -> incrSpaceShip(directionX,directionY,directionZ);
-                int checkCol = asteroids->CheckCol(directionX, directionY, directionZ);
+                int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
                 if (checkCol !=-1) {
                     asteroids -> DeleteAst(checkCol);
+                    gameOverFlag = true;
                 }
+            }
                 break;
             }
         case Qt::Key_S:
         {
+            if (gameOverFlag == false) {
             qDebug() << "Button S was pressed !";
             r += cameraSpeed *1.0f;
             directionX = r*sin(teta)*sin(phi);
@@ -131,14 +136,17 @@ void MySpace::paintGL()
             directionZ = r*sin(teta)*cos(phi);
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
-            int checkCol = asteroids->CheckCol(directionX, directionY, directionZ);
+            int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
+            }
             }
             break;
         }
         case Qt::Key_Q:
         {
+            if (gameOverFlag == false) {
             qDebug() << "Button Q was pressed !";
             teta -= .01f;
             directionX = r*sin(teta)*sin(phi);
@@ -151,14 +159,17 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             monVaisseau -> changeFlagPhi(true);
-            int checkCol = asteroids->CheckCol(directionX, directionY, directionZ);
+            int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
+            }
             }
             break;
         }
         case Qt::Key_D:
         {
+            if (gameOverFlag == false) {
             qDebug() << "Button D was pressed !";
             teta += .01f;
             directionX = r*sin(teta)*sin(phi);
@@ -172,14 +183,17 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             monVaisseau -> changeFlagPhi(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
-            int checkCol = asteroids -> CheckCol(directionX, directionY, directionZ);
+            int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
+            }
             }
             break;
         }
         case Qt::Key_A:
         {
+            if (gameOverFlag == false) {
             qDebug() << "Button A was pressed !";
             phi += .01f;
             directionX = r*sin(teta)*sin(phi);
@@ -192,14 +206,17 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             monVaisseau -> changeFlagTeta(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
-            int checkCol = asteroids -> CheckCol(directionX, directionY, directionZ);
+            int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
+            }
             }
             break;
         }
         case Qt::Key_E:
         {
+           if (gameOverFlag == false) {
             qDebug() << "Button E was pressed !";
             phi -= .01f;
             directionX = r*sin(teta)*sin(phi);
@@ -212,10 +229,12 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             monVaisseau -> changeFlagTeta(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
-            int checkCol = asteroids -> CheckCol(directionX, directionY, directionZ);
+            int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
             }
+           }
             break;
         }
 
@@ -224,3 +243,135 @@ void MySpace::paintGL()
         update();
 }
     }
+    //avancer
+        void MySpace::Z(){
+
+            if (gameOverFlag == false) {
+            r += cameraSpeed *-1.0f;
+            directionX = r*sin(teta)*sin(phi);
+            directionY = r*-cos(teta);
+            directionZ = r*sin(teta)*cos(phi);
+            monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+            asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+            int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+            if (checkCol !=-1) {
+                asteroids -> DeleteAst(checkCol);
+                gameOverFlag = true;
+            }
+            }
+
+        }
+
+        //reculer
+        void MySpace::S() {
+
+        if (gameOverFlag == false) {
+        r += cameraSpeed *1.0f;
+        directionX = r*sin(teta)*sin(phi);
+        directionY = r*-cos(teta);
+        directionZ = r*sin(teta)*cos(phi);
+        monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+        asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+        int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+        if (checkCol !=-1) {
+            asteroids -> DeleteAst(checkCol);
+            gameOverFlag = true;
+        }
+        }
+        }
+
+        //rotation haute
+        void MySpace::Q(){
+
+        if (gameOverFlag == false) {
+        teta -= .01f;
+        directionX = r*sin(teta)*sin(phi);
+        directionY = r*-cos(teta);
+        directionZ = r*sin(teta)*cos(phi);
+        directionX2 = 4.0f*sin(teta)*sin(phi);
+        directionY2 = -8.0f*cos(teta);
+        directionZ2 = 4.0f*sin(teta)*cos(phi);
+        monVaisseau -> changeFlagPhi(false);
+        monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+        asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+        monVaisseau -> changeFlagPhi(true);
+        int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+        if (checkCol !=-1) {
+            asteroids -> DeleteAst(checkCol);
+            gameOverFlag = true;
+
+    }
+        }
+    }
+        //rotation haute
+        void MySpace::D(){
+
+        if (gameOverFlag == false) {
+        teta += .01f;
+        directionX = r*sin(teta)*sin(phi);
+        directionY = r*-cos(teta);
+        directionZ = r*sin(teta)*cos(phi);
+        directionX2 = 4.0f*sin(teta)*sin(phi);
+        directionY2 = -8.0f*cos(teta);
+        directionZ2 = 4.0f*sin(teta)*cos(phi);
+        qDebug() << sin(teta);
+        monVaisseau -> changeFlagPhi(false);
+        monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+        monVaisseau -> changeFlagPhi(true);
+        asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+        int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        if (checkCol !=-1) {
+            asteroids -> DeleteAst(checkCol);
+            gameOverFlag = true;
+        }
+        }
+
+    }
+        //tourner gauche
+        void MySpace::A(){
+        if (gameOverFlag == false) {
+        phi += .01f;
+        directionX = r*sin(teta)*sin(phi);
+        directionY = r*-cos(teta);
+        directionZ = r*sin(teta)*cos(phi);
+        directionX2 = 4.0f*sin(teta)*sin(phi);
+        directionY2 = -8.0f*cos(teta);
+        directionZ2 = 4.0f*sin(teta)*cos(phi);
+        monVaisseau -> changeFlagTeta(false);
+        monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+        monVaisseau -> changeFlagTeta(true);
+        asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+        int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        if (checkCol !=-1) {
+            asteroids -> DeleteAst(checkCol);
+            gameOverFlag = true;
+            }
+        }
+    }
+        //tourner droite
+        void MySpace::E(){
+
+        if (gameOverFlag == false) {
+        phi -= .01f;
+        directionX = r*sin(teta)*sin(phi);
+        directionY = r*-cos(teta);
+        directionZ = r*sin(teta)*cos(phi);
+        directionX2 = 4.0f*sin(teta)*sin(phi);
+        directionY2 = -8.0f*cos(teta);
+        directionZ2 = 4.0f*sin(teta)*cos(phi);
+        monVaisseau -> changeFlagTeta(false);
+        monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
+        monVaisseau -> changeFlagTeta(true);
+        asteroids -> incrSpaceShip(directionX,directionY,directionZ);
+        int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        if (checkCol !=-1) {
+            asteroids -> DeleteAst(checkCol);
+            gameOverFlag = true;
+        }
+        }
+
+    }
+
+        bool MySpace::checkGameOverFlag() {
+            return gameOverFlag;
+        }

@@ -10,9 +10,7 @@ SpaceShip::SpaceShip()
 
 SpaceShip::~SpaceShip()
 {
-    // Destruction de la quadrique
-    if(m_Roue)
-        gluDeleteQuadric(m_Roue);
+
 }
 
 void SpaceShip::Display(uint64_t iTimeElapsed) const
@@ -105,8 +103,6 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(m_Roue, 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
-    //glRotatef(180.f, 1.f, 0.f, 0.f);
-    //gluDisk(m_Roue, 0.0, 0.5, 30, 1);
     glPopMatrix();
 
     //roue arrière gauche
@@ -121,23 +117,10 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(gluNewQuadric(), 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
-    //glRotatef(180.f, 1.f, 0.f, 0.f);
-    //gluDisk(m_Roue, 0.0, 0.1, 30, 1);
     glPopMatrix();
 
     glDisable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
-    /*/repère
-    glColor3ub(0, 0, 0);
-    glPushMatrix();
-    glTranslatef(0.8f, 0.0f, 0.0f);
-    glTranslatef(5.f, 2.f, -0.5f);
-    glRotated(90.0, 90., 1., 0.);
-    gluCylinder(m_Roue, 0.7, 0.7, 1.5, 32, 32);
-    glTranslatef(0.f, 0.f, 1.5f);
-    gluDisk(m_Roue, 0.0, 0.7, 30, 1);
-    glPopMatrix();
-
     /* Load textures */
 }
 
@@ -165,11 +148,4 @@ void SpaceShip::changeFlagPhi(bool flag){
     flagPhi=flag;
 }
 
-
-void SpaceShip::incrCoordinatesXSpaceship() {
-    spaceshipz_-=0.2;
-}
-void SpaceShip::incrCoordinatesYSpaceship() {
-    spaceshipz_-=0.2;
-}
 

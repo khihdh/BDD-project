@@ -6,7 +6,7 @@
 #include <OpenGL/glu.h>
 #include <QColor>
 
-// Classe dediee pour la gestion de la voiture
+// Classe dediee pour la gestion du vaisseau
 class SpaceShip
 {
 public:
@@ -19,8 +19,6 @@ public:
     // Methode d'affichage
     void Display(uint64_t iTimeElapsed) const;
     void incrCoordinatesZSpaceship(float teta2,float phi2,float r);
-    void incrCoordinatesYSpaceship();
-    void incrCoordinatesXSpaceship();
     void rotPhi(float phi,float teta,float r);
     void changeFlagTeta(bool flag);
     void changeFlagPhi(bool flag);

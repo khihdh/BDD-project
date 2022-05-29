@@ -39,6 +39,6 @@ public:
     void Display(uint64_t iTimeElapsed) ;
     void DrawAst(float x, float y, float z, GLdouble d, int  i);
     void DeleteAst(int j);
-    int CheckCol(float x, float y, float z);
+    int CheckColSpaceship(float x, float y, float z);
     void incrSpaceShip(float x, float y, float z);
 };

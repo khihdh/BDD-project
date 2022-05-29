@@ -5,6 +5,7 @@
 #include <OpenGL/glu.h>
 #include <QColor>
 
+// Classe dediee pour la gestion de la station
 class ISS
 {
 private:
