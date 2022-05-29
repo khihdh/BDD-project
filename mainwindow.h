@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
     detectFist detectFist_;
     QElapsedTimer startTime;
     QTimer t;
+    QTimer *timerMessageBox;
     QLabel * l;
     QPushButton * startB, * stopB;
     QPushButton *btnPlay;

@@ -39,6 +39,8 @@ void detectFist::closeApp() {
     cout<<"height :"<<cap.get(CAP_PROP_FRAME_HEIGHT)<<endl;
     cap.set(CAP_PROP_FRAME_WIDTH,frameWidth);
     cap.set(CAP_PROP_FRAME_HEIGHT,frameHeight);
+    moveWindow("image", 1000, 100);
+
     if(!cap.isOpened())  // check if we succeeded
     {
         cerr<<"Error openning the default camera"<<endl;
@@ -64,6 +66,10 @@ while (waitKey(5)<0)
 
     if (myspace_.checkGameOverFlag()){
         gameOverFlag = true;
+    }
+
+    if (myspace_.checkForWinFlag()){
+        winFlag = true;
     }
 
     Mat frame,frame_gray;
@@ -168,5 +174,9 @@ while (waitKey(5)<0)
 
     bool detectFist::checkGameOverFlag() {
         return gameOverFlag;
+    }
+
+    bool detectFist::checkForWinFlag() {
+        return winFlag;
     }
 

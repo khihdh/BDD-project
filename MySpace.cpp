@@ -136,9 +136,13 @@ void MySpace::paintGL()
                 monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
                 asteroids -> incrSpaceShip(directionX,directionY,directionZ);
                 int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+                int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
                 if (checkCol !=-1) {
                     asteroids -> DeleteAst(checkCol);
                     gameOverFlag = true;
+                }
+                if (checkAsh ==1) {
+                    winFlag = true;
                 }
             }
                 break;
@@ -154,9 +158,13 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
             }
             break;
@@ -177,9 +185,13 @@ void MySpace::paintGL()
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             monVaisseau -> changeFlagPhi(true);
             int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
             }
             break;
@@ -201,9 +213,13 @@ void MySpace::paintGL()
             monVaisseau -> changeFlagPhi(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
             }
             break;
@@ -224,9 +240,13 @@ void MySpace::paintGL()
             monVaisseau -> changeFlagTeta(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
             }
             break;
@@ -247,9 +267,13 @@ void MySpace::paintGL()
             monVaisseau -> changeFlagTeta(true);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
            }
             break;
@@ -271,9 +295,13 @@ void MySpace::paintGL()
             monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
             asteroids -> incrSpaceShip(directionX,directionY,directionZ);
             int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+            int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
             if (checkCol !=-1) {
                 asteroids -> DeleteAst(checkCol);
                 gameOverFlag = true;
+            }
+            if (checkAsh ==1) {
+                winFlag = true;
             }
             }
 
@@ -290,9 +318,13 @@ void MySpace::paintGL()
         monVaisseau -> incrCoordinatesZSpaceship(teta,phi,r);
         asteroids -> incrSpaceShip(directionX,directionY,directionZ);
         int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+        int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
         if (checkCol !=-1) {
             asteroids -> DeleteAst(checkCol);
             gameOverFlag = true;
+        }
+        if (checkAsh ==1) {
+            winFlag = true;
         }
         }
         }
@@ -313,11 +345,15 @@ void MySpace::paintGL()
         asteroids -> incrSpaceShip(directionX,directionY,directionZ);
         monVaisseau -> changeFlagPhi(true);
         int checkCol = asteroids->CheckColSpaceship(directionX, directionY, directionZ);
+        int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
         if (checkCol !=-1) {
             asteroids -> DeleteAst(checkCol);
             gameOverFlag = true;
 
-    }
+        }
+        if (checkAsh ==1) {
+            winFlag = true;
+        }
         }
     }
         //rotation haute
@@ -337,9 +373,13 @@ void MySpace::paintGL()
         monVaisseau -> changeFlagPhi(true);
         asteroids -> incrSpaceShip(directionX,directionY,directionZ);
         int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
         if (checkCol !=-1) {
             asteroids -> DeleteAst(checkCol);
             gameOverFlag = true;
+        }
+        if (checkAsh ==1) {
+            winFlag = true;
         }
         }
 
@@ -359,10 +399,14 @@ void MySpace::paintGL()
         monVaisseau -> changeFlagTeta(true);
         asteroids -> incrSpaceShip(directionX,directionY,directionZ);
         int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
         if (checkCol !=-1) {
             asteroids -> DeleteAst(checkCol);
             gameOverFlag = true;
             }
+        if (checkAsh ==1) {
+            winFlag = true;
+        }
         }
     }
         //tourner droite
@@ -381,9 +425,13 @@ void MySpace::paintGL()
         monVaisseau -> changeFlagTeta(true);
         asteroids -> incrSpaceShip(directionX,directionY,directionZ);
         int checkCol = asteroids -> CheckColSpaceship(directionX, directionY, directionZ);
+        int checkAsh = myStation -> CheckAshing(directionX, directionY, directionZ);
         if (checkCol !=-1) {
             asteroids -> DeleteAst(checkCol);
             gameOverFlag = true;
+        }
+        if (checkAsh ==1) {
+            winFlag = true;
         }
         }
 
@@ -391,4 +439,8 @@ void MySpace::paintGL()
 
         bool MySpace::checkGameOverFlag() {
             return gameOverFlag;
+        }
+
+        bool MySpace::checkForWinFlag() {
+            return winFlag;
         }

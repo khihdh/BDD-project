@@ -27,10 +27,12 @@ public:
     int frameHeight;
     VideoCapture cap;
     bool gameOverFlag = false;
+    bool winFlag = false;
     CascadeClassifier face_cascade;
     CascadeClassifier face_cascade2;
     MySpace myspace_;
     bool checkGameOverFlag();
+    bool checkForWinFlag();
     void reset();
     void closeApp();
 

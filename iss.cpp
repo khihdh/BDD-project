@@ -90,3 +90,10 @@ void ISS::Display(uint64_t iTimeElapsed)  {
 
 }
 
+int ISS::CheckAshing(float x, float y, float z) {
+      if (((x)*(x) + (y)*(y) + ((-30)-z)*((-30)-z)) < 40) {
+          return 1;
+      }
+   return -1;
+}
+

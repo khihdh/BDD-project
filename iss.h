@@ -16,6 +16,7 @@ public:
     ISS();
     ~ISS();
     void Display(uint64_t iTimeElapsed);
+    int CheckAshing(float x, float y, float z);
 };
 
 #endif // ISS_H

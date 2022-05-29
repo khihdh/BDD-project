@@ -27,6 +27,7 @@ public:
     void Q();
 
     bool checkGameOverFlag();
+    bool checkForWinFlag();
     void reset();
     void closeApp();
 
@@ -54,6 +55,7 @@ private:
         float tabz_[nbAstMax];
         GLdouble tabd_[nbAstMax];
         bool gameOverFlag = false;
+        bool winFlag = false;
 
         SpaceShip* monVaisseau = nullptr;
         ISS* myStation = nullptr;

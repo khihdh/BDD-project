@@ -54,11 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
 
-    QTimer *timer = new QTimer(this);
+    timerMessageBox = new QTimer(this);
 
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(checkGameOver()));
-
-    timer->start(1000);
+    QObject::connect(timerMessageBox, SIGNAL(timeout()), this, SLOT(checkGameOver()));
 }
 
 
@@ -71,6 +69,7 @@ void  MainWindow::play(){
     l->setText(QTime(0, 0).toString());
     startTime.restart();
     t.start(1000);
+    timerMessageBox->start(1000);
     int diff = spinBox->value();
     nbAst = 0;
     if (diff == 1) {
@@ -90,11 +89,24 @@ int MainWindow::getNbAst() {
 void MainWindow::checkGameOver()
 {
     if  (detectFist_.checkGameOverFlag()) {
-        qDebug()<<"gameOVER";
         t.stop();
         detectFist_.reset();
+        QMessageBox msgBox;
+        msgBox.setText("Vous avez perdu !");
+        msgBox.exec();
+        timerMessageBox->stop();
+    }
+    else if (detectFist_.checkForWinFlag()) {
+        t.stop();
+        detectFist_.reset();
+        QMessageBox msgBox;
+        msgBox.setText("Vous avez gagné !");
+        msgBox.exec();
+        timerMessageBox->stop();
     }
 }
+
+
 
 void MainWindow::quit() {
     detectFist_.closeApp();
