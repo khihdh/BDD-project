@@ -10,7 +10,7 @@ class collision
 private:
     float x=0,y=0,z=0;
     GLdouble d=0;
-    const static int nbAstMax = 50;
+    const static int nbAstMax = 16;
     int nbAst=0;
     float tabx_[nbAstMax];
     float taby_[nbAstMax];

@@ -12,5 +12,8 @@
         <file>blue.jpg</file>
         <file>grey.jpeg</file>
         <file>monochrome.jpeg</file>
+        <file>grey_tse.jpeg</file>
+        <file>grey_tse2.jpeg</file>
+        <file>grey_tse3.jpeg</file>
     </qresource>
 </RCC>

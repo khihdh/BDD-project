@@ -25,6 +25,13 @@ Asteroids::Asteroids(float tabx[nbAstMax], float taby[nbAstMax], float tabz[nbAs
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
+    /*for (int i=0; i< nbAstMax; i++) {
+        tabx_[i] =-50;
+        taby_[i] =-50;
+        tabz_[i] =-50;
+        tabd_[i] =-50;
+    }*/
+
     for (int i=0; i< nbAst; i++) {
         tabx_[i] =tabx[i];
         taby_[i] =taby[i];

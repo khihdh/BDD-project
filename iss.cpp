@@ -6,7 +6,7 @@ ISS::ISS()
 {
     QImage white = QImage(":/monochrome.jpeg");
     QImage text_white = white.convertToFormat(QImage::Format_RGBA8888);
-    QImage grey = QImage(":/grey.jpeg");
+    QImage grey = QImage(":/grey_tse3.jpeg");
     QImage text_grey = grey.convertToFormat(QImage::Format_RGBA8888);
 
     textures = new GLuint[2];

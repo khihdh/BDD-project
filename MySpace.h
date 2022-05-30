@@ -50,7 +50,7 @@ private:
         float x=0,y=0,z=0;
         GLdouble d=0;
         Asteroids* asteroids = nullptr;
-        const static int nbAstMax = 50;
+        const static int nbAstMax = 16;
         float tabx_[nbAstMax];
         float taby_[nbAstMax];
         float tabz_[nbAstMax];

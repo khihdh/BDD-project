@@ -9,7 +9,7 @@
 collision::collision(int nbAst2)
 {
     nbAst = nbAst2;
-    for (int i=0; i<nbAst; i++) {
+    for (int i=0; i<nbAstMax; i++) {
         tabx_[i]=x;
         taby_[i]=y;
         tabz_[i]=z;
@@ -22,7 +22,7 @@ void collision::setNbAst(int nbAst2) {
 }
 
 bool collision::checkAstCol(float tabx[nbAstMax], float taby[nbAstMax], float tabz[nbAstMax], GLdouble tabd[nbAstMax]) {
-    for (int i=0; i<nbAst; i++) {
+    for (int i=0; i<nbAstMax; i++) {
         z=QRandomGenerator::global()->bounded(-20,-1);
         x=QRandomGenerator::global()->bounded(-22,22);
         y=QRandomGenerator::global()->bounded(-18,18);

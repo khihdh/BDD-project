@@ -13,7 +13,7 @@ private:
     GLuint * textures;
     GLuint * textures_2;
     int nbAst=0;
-    const static int nbAstMax = 40;
+    const static int nbAstMax = 16;
     float c =10;
     float tabx_[nbAstMax];
     float taby_[nbAstMax];
