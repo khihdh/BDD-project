@@ -2,6 +2,7 @@
 #include <iostream> using namespace std;
 #include <QImage>
 
+// cette classe permet de dessiner le vaisseau et de representer le vaisseau dans un repere spherique
 SpaceShip::SpaceShip()
 {
     // Initialisation des paramètres
@@ -15,6 +16,7 @@ SpaceShip::~SpaceShip()
         gluDeleteQuadric(m_Roue);
 }
 
+//cette fonction permet de reinitialiser les coordonnees spheriques du vaisseau
 void SpaceShip::reset(){
     spaceshipx_=0;
     spaceshipy_=0;
@@ -26,8 +28,9 @@ void SpaceShip::reset(){
 };
 
 
+//cette fonction permet de dessiner le vaisseau et de lui appliquer des rotations et des translation dans le repère sphérique
 void SpaceShip::Display(uint64_t iTimeElapsed) const
-{
+{   
     glEnable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
     //lumière ambiante venant du ciel
@@ -39,9 +42,6 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glMaterialf(GL_FRONT, GL_SHININESS, shininess );
     GLfloat ambient_material[] = {0.25f,0.25f,0.25f,1.0f};
     glMaterialfv(GL_FRONT,GL_AMBIENT,ambient_material);
-    /*glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse_lampr);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, speculaire_lampr);
-*/
 
 
     //lumiere vaisseau
@@ -123,9 +123,11 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     //roue arrière droite
     glPushMatrix();
     glTranslatef(spaceshipx_, spaceshipy_, spaceshipz_);
+    //si on veut une rotation autour de l'axe y
     if (flagPhi){
         glRotatef(phi*55.8,0,1,0);
     }
+    //si on veut une rotation autour de l'axe x
     if (flagTeta){
         glRotatef((teta-90)*-58,1,0,0);
     }
@@ -133,8 +135,6 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(m_Roue, 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
-    //glRotatef(180.f, 1.f, 0.f, 0.f);
-    //gluDisk(m_Roue, 0.0, 0.5, 30, 1);
     glPopMatrix();
 
     //roue arrière gauche
@@ -150,22 +150,10 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(gluNewQuadric(), 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
-    //glRotatef(180.f, 1.f, 0.f, 0.f);
-    //gluDisk(m_Roue, 0.0, 0.1, 30, 1);
     glPopMatrix();
 
     glDisable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
-    /*/repère
-    glColor3ub(0, 0, 0);
-    glPushMatrix();
-    glTranslatef(0.8f, 0.0f, 0.0f);
-    glTranslatef(5.f, 2.f, -0.5f);
-    glRotated(90.0, 90., 1., 0.);
-    gluCylinder(m_Roue, 0.7, 0.7, 1.5, 32, 32);
-    glTranslatef(0.f, 0.f, 1.5f);
-    gluDisk(m_Roue, 0.0, 0.7, 30, 1);
-    glPopMatrix();
 
     /* Load textures */
 }
@@ -178,6 +166,7 @@ void SpaceShip::incrCoordinatesZSpaceship(float teta2,float phi2,float r) {
     spaceshipz_ = r*sin(teta)*cos(phi);
 }
 
+//on exprime les coordonnes cartesiennes du vaisseau en fonction de ses coordonees spherique
 void SpaceShip::rotPhi(float teta2,float phi2,float r){
     teta = teta2;
     phi=phi2;
@@ -187,6 +176,7 @@ void SpaceShip::rotPhi(float teta2,float phi2,float r){
 
 }
 
+//ces fonctions permettent de changer le flag de l'angle theta ou phi
 void SpaceShip::changeFlagTeta(bool flag){
     flagTeta=flag;
 }
