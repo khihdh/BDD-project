@@ -2,7 +2,7 @@
 #include <iostream> using namespace std;
 #include <QImage>
 
-// cette fonction permet de dessiner le vaisseau et de representer le vaisseau dans un repere spherique
+// cette classe permet de dessiner le vaisseau et de representer le vaisseau dans un repere spherique
 SpaceShip::SpaceShip()
 {
     // Initialisation des paramètres
