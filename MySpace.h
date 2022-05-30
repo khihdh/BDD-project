@@ -2,16 +2,17 @@
 // Classe dediee a l'affichage d'une scene OpenGL
 #include "spaceship.h"
 #include "Asteroids.h"
+#include "iss.h"
+#include "collision.h"
 #include <QOpenGLWidget>
 #include <QKeyEvent>
 #include <QTimer>
-#include "iss.h"
 
-// Classe dediee a l'affichage d'une scene OpenGL
+// Classe dediee a l'affichage de la scene du jeu
 class MySpace : public QOpenGLWidget
 {
 public:
-    int nbAst = 40;
+    int nbAst = 20;
     float camFrontZ ;
     // Constructeur
     MySpace(QWidget * parent = nullptr);
@@ -26,6 +27,11 @@ public:
     void S();
     void Q();
 
+    bool checkGameOverFlag();
+    bool checkForWinFlag();
+    void reset();
+    void closeApp();
+
 protected:
 
 
@@ -38,26 +44,23 @@ protected:
 
     // Fonction d'affichage
     void paintGL();
-
-
-    //fonction update
     void keyPressEvent(QKeyEvent * keyEvent);
-
-    //void mouse_callback(double xpos, double ypos)
 
 private:
         float x=0,y=0,z=0;
         GLdouble d=0;
         Asteroids* asteroids = nullptr;
-        const static int nbAstMax = 50;
+        const static int nbAstMax = 16;
         float tabx_[nbAstMax];
         float taby_[nbAstMax];
         float tabz_[nbAstMax];
         GLdouble tabd_[nbAstMax];
+        bool gameOverFlag = false;
+        bool winFlag = false;
 
         SpaceShip* monVaisseau = nullptr;
+        collision *col = nullptr;
         ISS* myStation = nullptr;
-        //float camFrontZ ;
         float camFrontX = 0;
         float phi=0;
         float teta = 90;
@@ -76,3 +79,4 @@ private:
         float m_TimeElapsed { 0.0f };
         QTimer m_AnimationTimer;
 };
+

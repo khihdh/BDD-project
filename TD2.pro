@@ -22,6 +22,7 @@ TARGET 	  = TD2
 SOURCES += main.cpp \
     Asteroids.cpp \
     MySpace.cpp \
+    collision.cpp \
     coordinates.cpp \
     detectfist.cpp \
     iss.cpp \
@@ -30,6 +31,7 @@ SOURCES += main.cpp \
 HEADERS += \
     Asteroids.h \
     MySpace.h \
+    collision.h \
     coordinates.h \
     detectfist.h \
     iss.h \

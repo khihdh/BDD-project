@@ -15,14 +15,26 @@ using namespace std;
 class detectFist : public QOpenGLWidget
 {
 public:
+public:
+    int i=0;
     detectFist(QWidget * parent = nullptr);
     ~detectFist();
-    void show(int nbAst);
-    int frameWidth=640;
-    int frameHeight=480;
+    void show();
+    void setNbAst(int i);
+    int frameWidth;
+    int frameHeight;
+    VideoCapture cap;
+    bool gameOverFlag = false;
+    bool winFlag = false;
     CascadeClassifier face_cascade;
     CascadeClassifier face_cascade2;
     MySpace myspace_;
+    bool checkGameOverFlag();
+    bool checkForWinFlag();
+    void reset();
+    void closeApp();
+    int nbAst;
+
 
 };
 

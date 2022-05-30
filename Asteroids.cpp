@@ -25,6 +25,13 @@ Asteroids::Asteroids(float tabx[nbAstMax], float taby[nbAstMax], float tabz[nbAs
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
+    /*for (int i=0; i< nbAstMax; i++) {
+        tabx_[i] =-50;
+        taby_[i] =-50;
+        tabz_[i] =-50;
+        tabd_[i] =-50;
+    }*/
+
     for (int i=0; i< nbAst; i++) {
         tabx_[i] =tabx[i];
         taby_[i] =taby[i];
@@ -42,10 +49,13 @@ void Asteroids::DeleteAst(int j){
     tabFlagDeleteAst[j]=true;
 }
 
+void Asteroids::setNbAst(int nbAst2) {
+    nbAst = nbAst2;
+}
+
 
 void  Asteroids::DrawAst(float x, float y, float z, GLdouble d,int i) {
 
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
     glPushMatrix();
     GLUquadricObj *quad = gluNewQuadric();
     gluQuadricTexture(quad, GL_TRUE);
@@ -60,22 +70,9 @@ void  Asteroids::DrawAst(float x, float y, float z, GLdouble d,int i) {
 
 }
 
-float Asteroids::RandomFloat(float min, float max)
-{
-    // this  function assumes max > min, you may want
-    // more robust error checking for a non-debug build
-    assert(max > min);
-    float random = ((float) rand()) / (float) RAND_MAX;
-
-    // generate (in your case) a float between 0 and (4.5-.78)
-    // then add .78, giving you a float between .78 and 4.5
-    float range = max - min;
-    return (random*range) + min;
-}
-
-int Asteroids::CheckCol(float x, float y, float z) {
+int Asteroids::CheckColSpaceship(float x, float y, float z) {
     for (int j = 0; j<nbAst; j++) {
-            if (((tabx_[j]-x)*(tabx_[j]-x) + (taby_[j]-y)*(taby_[j]-y) + (tabz_[j]-z)*(tabz_[j]-z)) < 36) {
+            if (((tabx_[j]-x)*(tabx_[j]-x) + (taby_[j]-y)*(taby_[j]-y) + (tabz_[j]-z)*(tabz_[j]-z)) < 16) {
                 return j;
             }
         }
@@ -89,11 +86,14 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     glDisable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
 
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
     for (int i=0; i<nbAst; i++) {
-        if (tabFlagDeleteAst[i]==false){
-            DrawAst(tabx_[i],taby_[i],tabz_[i], tabd_[i],i);
-        }
+        DrawAst(tabx_[i],taby_[i],tabz_[i], tabd_[i],i);
+
     }
+    glPopMatrix();
+
 
     glPushMatrix();
     glBindTexture(GL_TEXTURE_2D, textures[1]);
@@ -102,6 +102,8 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     gluQuadricTexture(quad, GL_TRUE);
     gluSphere(quad,50, 50, 50);
     glPopMatrix();
+
+
 
     glEnable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
@@ -112,8 +114,4 @@ void Asteroids::incrSpaceShip(float x, float y, float z) {
     xSpaceShip = x;
     ySpaceShip = y;
     zSpaceShip = z;
-}
-
-void Asteroids::incrCoordinatesZSpaceship() {
-    spaceshipz_-=0.2;
 }

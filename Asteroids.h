@@ -13,7 +13,7 @@ private:
     GLuint * textures;
     GLuint * textures_2;
     int nbAst=0;
-    const static int nbAstMax = 40;
+    const static int nbAstMax = 16;
     float c =10;
     float tabx_[nbAstMax];
     float taby_[nbAstMax];
@@ -29,6 +29,7 @@ public:
     // Constructeur avec parametres
     Asteroids(float tabx_[nbAstMax], float taby_[nbAstMax], float tabz_[nbAstMax], GLdouble tabd_[nbAstMax], int nbAst);
     void incrCoordinatesZSpaceship();
+    void setNbAst(int nbAst2);
 
 
     // Destructeur
@@ -39,6 +40,7 @@ public:
     void Display(uint64_t iTimeElapsed) ;
     void DrawAst(float x, float y, float z, GLdouble d, int  i);
     void DeleteAst(int j);
-    int CheckCol(float x, float y, float z);
+    int CheckColSpaceship(float x, float y, float z);
     void incrSpaceShip(float x, float y, float z);
 };
+

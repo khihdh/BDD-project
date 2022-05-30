@@ -1,17 +1,38 @@
 #include "detectfist.h"
+#include <unistd.h>
+#include <cstdio>
+#include <iostream>
+
 
 
 detectFist::detectFist(QWidget *parent) : QOpenGLWidget(parent)
 {
+    frameWidth=640;
+    frameHeight=480;
+
 }
 
 detectFist::~detectFist(){
 
-    myspace_.~MySpace();
+    myspace_.hide();
+}
+
+void detectFist::reset(){
+    unsigned int microsecond = 1000000;
+    usleep(5 * microsecond);
+    myspace_.hide();
+    myspace_.reset();
+    cap.release();
+    gameOverFlag = false;
+    winFlag = false;
+}
+
+void detectFist::closeApp() {
+    myspace_.closeApp();
     close();
 }
 
-    void detectFist::show(int nbAst){
+    void detectFist::show(){
 
         myspace_.setNbAst(nbAst);
         myspace_.show();
@@ -42,6 +63,15 @@ detectFist::~detectFist(){
 
     while (waitKey(5)<0)
     {
+
+        if (myspace_.checkGameOverFlag()){
+                gameOverFlag = true;
+            }
+
+            if (myspace_.checkForWinFlag()){
+                winFlag = true;
+            }
+
 
         Mat frame,frame_gray;
         std::vector<Rect> faces;
@@ -102,6 +132,7 @@ detectFist::~detectFist(){
                 booleanAfter.push_back(booleanBefore[1]);
             }
 
+
             if (afterSort[0].y<160 && booleanAfter[0]){
                 if (160<afterSort[1].y && afterSort[1].y<320 && booleanAfter[1]){
                     myspace_.E();
@@ -124,12 +155,42 @@ detectFist::~detectFist(){
                     cout<<"rotation gauche  "<<endl;
                 }
             }
+
             if (160<afterSort[0].y && afterSort[0].y<320 && !booleanAfter[0]){
                 if (160<afterSort[1].y && afterSort[1].y<320 && !booleanAfter[1]){
                     cout<<"avance  "<<endl;
                     myspace_.Z();
                 }
+                if (afterSort[1].y<160 && !booleanAfter[1]){
+                    cout<<"avance  "<<endl;
+                    cout<<"rotation gauche  "<<endl;
+                    myspace_.Z();
+                    myspace_.A();
+                }
             }
+            if (afterSort[0].y<160 && !booleanAfter[0]){
+                if (160<afterSort[1].y && afterSort[1].y<320 && !booleanAfter[1]){
+                    cout<<"avance  "<<endl;
+                    myspace_.E();
+                    cout <<"rotation droite  "<<endl;
+                    myspace_.Z();
+                }
+                if (afterSort[1].y<160 && !booleanAfter[1]){
+                    cout<<"avance  "<<endl;
+                    cout<<"rotation haute  "<<endl;
+                    myspace_.Z();
+                    myspace_.Q();
+                }
+            }
+            if (320<afterSort[0].y && !booleanAfter[0]){
+                if (320<afterSort[1].y && !booleanAfter[1]){
+                    cout<<"avance  "<<endl;
+                    myspace_.E();
+                    cout <<"rotation basse  "<<endl;
+                    myspace_.D();
+                }
+            }
+
 
 
             beforeSort.clear();
@@ -141,3 +202,17 @@ detectFist::~detectFist(){
     }
     // the camera will be deinitialized automatically in VideoCapture destructor
 }
+
+    bool detectFist::checkGameOverFlag() {
+           return gameOverFlag;
+       }
+
+       bool detectFist::checkForWinFlag() {
+           return winFlag;
+       }
+
+       void detectFist::setNbAst(int i)
+       {
+           nbAst = i;
+       }
+

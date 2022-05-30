@@ -15,6 +15,17 @@ SpaceShip::~SpaceShip()
         gluDeleteQuadric(m_Roue);
 }
 
+void SpaceShip::reset(){
+    spaceshipx_=0;
+    spaceshipy_=0;
+    spaceshipz_=0;
+    phi=0;
+    teta = 90;
+    flagTeta = true;
+    flagPhi=true;
+};
+
+
 void SpaceShip::Display(uint64_t iTimeElapsed) const
 {
     glEnable(GL_LIGHTING);
@@ -32,6 +43,20 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glMaterialfv(GL_FRONT, GL_SPECULAR, speculaire_lampr);
 */
 
+
+    //lumiere vaisseau
+    glEnable(GL_LIGHT1);
+        //où est la lumière
+        GLfloat light_tab2[] = {0.0f+spaceshipx_, 0.0f+spaceshipy_, 0.0f+spaceshipz_};
+        glLightfv(GL_LIGHT1,GL_POSITION,light_tab2);
+
+        GLfloat ambient_lampr2[] = {0.0, 0.0, 0.0,1.0};
+        glLightfv(GL_LIGHT1,GL_AMBIENT,ambient_lampr2);
+        GLfloat diffuse_lampr2[] = {.9, .9, 0.0,1.0};
+        glLightfv(GL_LIGHT1,GL_DIFFUSE,diffuse_lampr2);
+        GLfloat speculaire_lampr2[]={100.,100.,0.,1.0};
+        glLightfv(GL_LIGHT1,GL_SPECULAR,speculaire_lampr2);
+
     // rectangle
     glPushMatrix();
     glTranslatef(0.0f+spaceshipx_, 0.0f+spaceshipy_, 0.0f+spaceshipz_);
@@ -39,7 +64,7 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
         glRotatef(phi*55.8,0,1,0);
     }
     if (flagTeta){
-        glRotatef((teta-90)*-38,1,0,0);
+        glRotatef((teta-90)*-58,1,0,0);
     }
     glBegin(GL_QUADS);
     //face derrière
@@ -93,15 +118,18 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
     glVertex3f(0.0f, 0.0f, -3.f);
     glEnd();
     glPopMatrix();
+
+
     //roue arrière droite
     glPushMatrix();
-    glTranslatef(0.8f+spaceshipx_, 0.1f+spaceshipy_, -0.9f+spaceshipz_);
+    glTranslatef(spaceshipx_, spaceshipy_, spaceshipz_);
     if (flagPhi){
         glRotatef(phi*55.8,0,1,0);
     }
     if (flagTeta){
-        glRotatef((teta-90)*-38,1,0,0);
+        glRotatef((teta-90)*-58,1,0,0);
     }
+    glTranslatef(0.8f, 0.1f, -0.9f);
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(m_Roue, 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
@@ -111,13 +139,14 @@ void SpaceShip::Display(uint64_t iTimeElapsed) const
 
     //roue arrière gauche
     glPushMatrix();
-    glTranslatef(-0.8f+spaceshipx_, 0.1f+spaceshipy_, -0.9f+spaceshipz_);
+    glTranslatef(spaceshipx_, spaceshipy_, spaceshipz_);
     if (flagPhi){
         glRotatef(phi*55.8,0,1,0);
     }
     if (flagTeta){
-        glRotatef((teta-90)*-38,1,0,0);
+        glRotatef((teta-90)*-58,1,0,0);
     }
+    glTranslatef(-0.8f, 0.1f, -0.9f);
     glRotated(180.0, 0., 1., 0.);
     gluCylinder(gluNewQuadric(), 0.2, 0.2, 1.1, 32, 32);
     gluDisk(m_Roue, 0.0, 0.2, 30, 1);
