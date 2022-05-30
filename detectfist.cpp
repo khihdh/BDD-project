@@ -17,12 +17,16 @@ detectFist::~detectFist(){
     myspace_.hide();
 }
 
+//Cette fonction permet de fermer la scène du jeu et de reinitaliser les coordonees du vaisseau et le statut de la partie
 void detectFist::reset(){
+    //on fait une pose de 3s avant la fermeture de la scene de jeu
     unsigned int microsecond = 1000000;
-    usleep(5 * microsecond);
+    usleep(3 * microsecond);
+    //on ferme la fenetre de la scene
     myspace_.hide();
     myspace_.reset();
     cap.release();
+    //on reinitialise le statut de la partie
     gameOverFlag = false;
     winFlag = false;
 }
@@ -32,8 +36,12 @@ void detectFist::closeApp() {
     close();
 }
 
-    void detectFist::show(){
+//Cette fonction permet de lancer la camera et de gerer les interactions entre le joueur et la webcam
+//Elle permet egalement d'initaliser la scene du jeu
 
+void detectFist::show(){
+
+        //on initialise la scene du jeu et on precise a l'objet myspace le nombre d'asteroide
         myspace_.setNbAst(nbAst);
         myspace_.show();
 
@@ -135,22 +143,26 @@ void detectFist::closeApp() {
 
             if (afterSort[0].y<160 && booleanAfter[0]){
                 if (160<afterSort[1].y && afterSort[1].y<320 && booleanAfter[1]){
+                    //on applique une rotation droite au vaisseau
                     myspace_.E();
                     cout <<"rotation droite  "<<endl;
                 }
                 if (afterSort[1].y<160 && booleanAfter[1]){
+                    //on applique une rotation haute au vaisseau
                     cout<<"rotation haute  "<<endl;
                     myspace_.Q();
                 }
             }
             if (afterSort[0].y>320 && booleanAfter[0]){
                 if (afterSort[1].y>320 && booleanAfter[1]){
+                    //on applique une rotation basse au vaisseau
                     cout<<"rotation basse  "<<endl;
                     myspace_.D();
                 }
             }
             if (160<afterSort[0].y && afterSort[0].y<320 && booleanAfter[0]){
                 if (afterSort[1].y<160 && booleanAfter[1]){
+                    //on applique une rotation gauche au vaisseau
                     myspace_.A();
                     cout<<"rotation gauche  "<<endl;
                 }
@@ -158,6 +170,7 @@ void detectFist::closeApp() {
 
             if (160<afterSort[0].y && afterSort[0].y<320 && !booleanAfter[0]){
                 if (160<afterSort[1].y && afterSort[1].y<320 && !booleanAfter[1]){
+                    //on fais avancer le vaisseau
                     cout<<"avance  "<<endl;
                     myspace_.Z();
                 }
@@ -185,8 +198,8 @@ void detectFist::closeApp() {
             if (320<afterSort[0].y && !booleanAfter[0]){
                 if (320<afterSort[1].y && !booleanAfter[1]){
                     cout<<"avance  "<<endl;
-                    myspace_.E();
-                    cout <<"rotation basse  "<<endl;
+                    myspace_.Z();
+                    cout <<"rotation basse"<<endl;
                     myspace_.D();
                 }
             }
@@ -203,15 +216,18 @@ void detectFist::closeApp() {
     // the camera will be deinitialized automatically in VideoCapture destructor
 }
 
-    bool detectFist::checkGameOverFlag() {
+//retourne le flag permettant de savoir si la partie est perdu
+bool detectFist::checkGameOverFlag() {
            return gameOverFlag;
        }
 
-       bool detectFist::checkForWinFlag() {
+//retourne le flag permettant de savoir si la partie est gagné
+bool detectFist::checkForWinFlag() {
            return winFlag;
        }
 
-       void detectFist::setNbAst(int i)
+//Permet de set le nombre d'asteroides choisis par le joueur
+void detectFist::setNbAst(int i)
        {
            nbAst = i;
        }
