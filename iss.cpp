@@ -36,17 +36,41 @@ void ISS::Display(uint64_t iTimeElapsed)  {
     GLUquadricObj *quad = gluNewQuadric();
     glPushMatrix();
     glTranslatef(0.f,0.f,-30.f);
-    glRotatef(60,1,0,0);
+
+    glBindTexture(GL_TEXTURE_2D, textures[1]);
 
     glPushMatrix();
-    glTranslatef(0.f, 0.f, 7.7f);
-    gluQuadricTexture(quad, GL_TRUE);
+    glRotatef(-30,1,0,0);
+    glTranslatef(0.f, 0.f, 7.6f);
+    gluQuadricTexture(quad, GL_FALSE);
+    glColor3f(1,0,0);
+
+    if (iTimeElapsed%50<25){
+
+        glColor3f(1,1,1);
+}
+    gluSphere(quad, 0.5, 50, 50);
+
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-30,1,0,0);
+    glTranslatef(0.f, 0.f, -7.6f);
+    gluQuadricTexture(quad, GL_FALSE);
     gluSphere(quad, 0.5, 50, 50);
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(0.f, 0.f, -7.7f);
-    gluQuadricTexture(quad, GL_TRUE);
+    glRotatef(-30,1,0,0);
+    glTranslatef(7.6f, 0.f, 0.f);
+    gluQuadricTexture(quad, GL_FALSE);
+    gluSphere(quad, 0.5, 50, 50);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-30,1,0,0);
+    glTranslatef(-7.6f, 0.f, 0.f);
+    gluQuadricTexture(quad, GL_FALSE);
     gluSphere(quad, 0.5, 50, 50);
     glPopMatrix();
 
@@ -55,20 +79,11 @@ void ISS::Display(uint64_t iTimeElapsed)  {
     //parameter
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
+    glColor3f(1,1,1);
     //where's the ligth
     GLfloat light_tab[] = {0,0,7.7f,1};
-    /*GLfloat light_tab2[] = {10.4,0,10.15,1.0};
-    GLfloat light_tab3[] = {10.4,0,10.15,1.0};
-    GLfloat light_tab4[] = {10.4,0,10.15,1.0};
-    GLfloat light_tab5[] = {10.4,0,10.15,1.0};
-    GLfloat light_tab6[] = {10.4,0,10.15,1.0};*/
 
     glLightfv(GL_LIGHT1,GL_POSITION,light_tab);
-    /*glLightfv(GL_LIGHT1,GL_POSITION,light_tab2);
-    glLightfv(GL_LIGHT1,GL_POSITION,light_tab3);
-    glLightfv(GL_LIGHT1,GL_POSITION,light_tab4);
-    glLightfv(GL_LIGHT1,GL_POSITION,light_tab5);
-    glLightfv(GL_LIGHT1,GL_POSITION,light_tab6);*/
 
     GLfloat ambient_lampr2[] = {0.0, 0.0, 0.0,1.0};
     glLightfv(GL_LIGHT1,GL_AMBIENT,ambient_lampr2);
@@ -91,6 +106,7 @@ void ISS::Display(uint64_t iTimeElapsed)  {
     glEnable(GL_TEXTURE_2D);
     c+=0.1;
     glBindTexture(GL_TEXTURE_2D, textures[1]);
+    glRotatef(60,1,0,0);
     glRotatef(0+c,0,0,1.);
     gluQuadricTexture(quad, GL_TRUE);
     gluDisk(quad, 7, 8., 30, 2);
