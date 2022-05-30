@@ -5,6 +5,7 @@
 #include <vector>
 
 
+//Cette classe permet de permet de dessiner l’espace et puis de dessiner les astéroïdes dans l’espace et de les faire tourner sur eux même autour de l’axe y. 
 class Asteroids
 {
 
@@ -38,9 +39,13 @@ public:
     // Methode d'affichage
     float RandomFloat(float min, float max);
     void Display(uint64_t iTimeElapsed) ;
+    //Cette fonction permet de dessiner un asteroide en fonction des coordonees x, y et z choisis, et du diamètre d choisis
+    //param : coordonnees x,y et z, diametre de l'asteroide et son numero
     void DrawAst(float x, float y, float z, GLdouble d, int  i);
     void DeleteAst(int j);
+    //cette fonction permet de checker si le vaisseau entre en collision avec un des asteroides dessinee 
+    //param: coordonnees x,y,z du vaisseau
+    //return: -1 si il n'y a pas de colission et 1 si il y a colission
     int CheckColSpaceship(float x, float y, float z);
     void incrSpaceShip(float x, float y, float z);
 };
-
