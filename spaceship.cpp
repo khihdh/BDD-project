@@ -28,6 +28,7 @@ void SpaceShip::reset(){
 };
 
 
+//cette fonction permet de dessiner le vaisseau et de lui appliquer des rotations et des translation dans le repère sphérique
 void SpaceShip::Display(uint64_t iTimeElapsed) const
 {   
     glEnable(GL_LIGHTING);
