@@ -29,6 +29,7 @@ public:
     // Constructeur avec parametres
     Asteroids(float tabx_[nbAstMax], float taby_[nbAstMax], float tabz_[nbAstMax], GLdouble tabd_[nbAstMax], int nbAst);
     void incrCoordinatesZSpaceship();
+    void setNbAst(int nbAst2);
 
 
     // Destructeur

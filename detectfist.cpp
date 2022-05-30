@@ -2,6 +2,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/objdetect/objdetect.hpp>
 #include "detectfist.h"
+#include <unistd.h>
 #include <cstdio>
 #include <iostream>
 
@@ -19,10 +20,13 @@ detectFist::~detectFist(){
 }
 
 void detectFist::reset(){
+    unsigned int microsecond = 1000000;
+    usleep(5 * microsecond);
     myspace_.hide();
     myspace_.reset();
     cap.release();
     gameOverFlag = false;
+    winFlag = false;
 }
 
 void detectFist::closeApp() {

@@ -22,6 +22,7 @@ public:
     void rotPhi(float phi,float teta,float r);
     void changeFlagTeta(bool flag);
     void changeFlagPhi(bool flag);
+    void reset();
 
 private:
     GLUquadric * m_Roue { nullptr };

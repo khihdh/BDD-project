@@ -3,6 +3,7 @@
 #include "spaceship.h"
 #include "Asteroids.h"
 #include "iss.h"
+#include "collision.h"
 #include <QOpenGLWidget>
 #include <QKeyEvent>
 #include <QTimer>
@@ -58,6 +59,7 @@ private:
         bool winFlag = false;
 
         SpaceShip* monVaisseau = nullptr;
+        collision *col = nullptr;
         ISS* myStation = nullptr;
         float camFrontX = 0;
         float phi=0;

@@ -1,5 +1,4 @@
 #include "MySpace.h"
-#include "collision.h"
 
 #include <QApplication>
 #include <cmath>
@@ -12,7 +11,7 @@ MySpace::MySpace(QWidget *parent) : QOpenGLWidget(parent)
 {
     // Reglage de la taille/position
     setFixedSize(WIN, WIN);
-    collision *col = new  collision(nbAst);
+    col = new  collision(nbAst);
     col->checkAstCol(tabx_, taby_, tabz_, tabd_);
 
     // Connexion du timer
@@ -37,6 +36,9 @@ void MySpace::reset(){
     phi=0;
     teta = 90;
     gameOverFlag = false;
+    winFlag = false;
+    monVaisseau->reset();
+    Z();
 };
 
 void MySpace::closeApp() {
@@ -82,6 +84,8 @@ void MySpace::resizeGL(int width, int height)
 
 void MySpace::setNbAst(int nbAst2) {
     nbAst = nbAst2;
+    //asteroids ->setNbAst(nbAst2);
+    //col -> setNbAst(nbAst2);
 }
 // Fonction d'affichage
 void MySpace::paintGL()

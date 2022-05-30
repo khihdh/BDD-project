@@ -13,6 +13,16 @@ SpaceShip::~SpaceShip()
 
 }
 
+void SpaceShip::reset(){
+    spaceshipx_=0;
+    spaceshipy_=0;
+    spaceshipz_=0;
+    phi=0;
+    teta = 90;
+    flagTeta = true;
+    flagPhi=true;
+};
+
 void SpaceShip::Display(uint64_t iTimeElapsed) const
 {
     glEnable(GL_LIGHTING);

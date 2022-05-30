@@ -42,6 +42,10 @@ void Asteroids::DeleteAst(int j){
     tabFlagDeleteAst[j]=true;
 }
 
+void Asteroids::setNbAst(int nbAst2) {
+    nbAst = nbAst2;
+}
+
 
 void  Asteroids::DrawAst(float x, float y, float z, GLdouble d,int i) {
 
@@ -83,7 +87,7 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     }
     glPopMatrix();
 
-    /*
+
     glPushMatrix();
     glBindTexture(GL_TEXTURE_2D, textures[1]);
     glTranslatef(0.f,0.f,0.f + spaceshipz_);
@@ -91,7 +95,7 @@ void Asteroids::Display(uint64_t iTimeElapsed)
     gluQuadricTexture(quad, GL_TRUE);
     gluSphere(quad,50, 50, 50);
     glPopMatrix();
-    */
+
 
 
     glEnable(GL_LIGHTING);

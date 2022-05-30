@@ -11,13 +11,14 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QLabel *label, *nbAst_Label;
+    QLabel *label, *nbAst_Label, *winLoose_Label;
     QSpinBox *spinBox;
     int nbAst =0;
     detectFist detectFist_;
     QElapsedTimer startTime;
     QTimer t;
     QTimer *timerMessageBox;
+    QString winLoose_str;
     QLabel * l;
     QPushButton * startB, * stopB;
     QPushButton *btnPlay;

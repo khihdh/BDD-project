@@ -18,6 +18,7 @@ private:
     GLdouble tabd_[nbAstMax];
 public:
     collision(int nbAst);
+    void setNbAst(int nbAst2);
     float RandomFloat(float min, float max);
     bool checkAstCol(float tabx_[nbAstMax], float taby_[nbAstMax], float tabz_[nbAstMax], GLdouble tabd_[nbAstMax]);
 };
